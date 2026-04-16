@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: degree-container
-        image: YOUR_DOCKER_HUB_USERNAME/degree-app:latest
+        image: sathiyaleo/degree-app:latest
         ports:
         - containerPort: 80
 ---
