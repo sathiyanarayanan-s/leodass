@@ -21,7 +21,8 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl apply -f deployment.yaml'
+                // We add --validate=false to skip the connection error
+                bat 'kubectl apply -f deployment.yaml --validate=false'
                 bat 'kubectl rollout restart deployment degree-app'
             }
         }
