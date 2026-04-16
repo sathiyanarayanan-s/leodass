@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        // This tells Jenkins exactly where the cluster "key" is
+        KUBECONFIG = "C:/ProgramData/Jenkins/.jenkins/.kube/config"
+    }
     stages {
         stage('Checkout GITHUB') {
             steps {
@@ -21,9 +25,9 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                // We add --validate=false to skip the connection error
-                bat 'kubectl apply -f deployment.yaml --validate=false'
-                bat 'kubectl rollout restart deployment degree-app'
+                // We use --kubeconfig to force Jenkins to use the right connection
+                bat 'kubectl apply -f deployment.yaml --kubeconfig="%KUBECONFIG%" --validate=false'
+                bat 'kubectl rollout restart deployment degree-app --kubeconfig="%KUBECONFIG%"'
             }
         }
     }
