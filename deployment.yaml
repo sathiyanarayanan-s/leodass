@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: degree-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: degree-app
+  template:
+    metadata:
+      labels:
+        app: degree-app
+    spec:
+      containers:
+      - name: degree-container
+        image: your_username/degree-app:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: degree-service
+spec:
+  type: NodePort
+  selector:
+    app: degree-app
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30001
